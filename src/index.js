@@ -1,4 +1,5 @@
 import React from 'react'
+import ga from './ga'
 
 class Experiment extends React.Component {
   constructor(props) {
@@ -31,9 +32,18 @@ class Experiment extends React.Component {
     return Math.floor(Math.random() * (this.props.children.length-1))
   }
 
+  sendGaEvent(variant) {
+    ga((tracker) => {
+      tracker.set('expId', this.props.id)
+      tracker.set('expVar', variant.props.variant)
+      tracker.send('pageview')
+    })
+  }
+
   componentDidMount () {
     const variant = this.getVariant()
 
+    this.sendGaEvent(variant)
     this.setState({
       loading: false,
       variant: variant
