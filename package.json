@@ -1,6 +1,6 @@
 {
   "name": "react-ab-experiment",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AB Experiment React Component",
   "main": "lib/index.js",
   "repository": "git@github.com:envato/react-ab-experiment.git",

@@ -53,11 +53,11 @@ class Experiment extends React.Component {
   render () {
     const variant = this.state.variant
 
-    return (
-      <div>
-        {variant && variant}
-      </div>
-    )
+    if (variant == null) {
+      return null
+    }
+
+    return variant
   }
 }
 
