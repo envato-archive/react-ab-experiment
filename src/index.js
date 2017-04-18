@@ -8,9 +8,9 @@ class Experiment extends React.Component {
       variant: null
     }
 
-    this.store = this.props.children.reduce((acc, child) => {
-        acc[child.props.variant] = child
-        return acc
+    this.store = this.props.children.reduce((store, child) => {
+        store[child.props.variant] = child
+        return store
       },{})
   }
 
