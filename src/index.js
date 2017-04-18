@@ -9,7 +9,7 @@ class ReactABExperiment extends React.Component {
   }
 
   render () {
-
+    <div>Hi</div>
   }
 }
 

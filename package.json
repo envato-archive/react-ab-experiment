@@ -7,10 +7,11 @@
   "keywords": [
     "ab",
     "test",
+    "ab test",
     "react",
     "experiment"
   ],
-  "author": "yoshdog",
+  "author": "toan.nguyen@envato.com",
   "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir lib",
@@ -28,6 +29,8 @@
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "next.js": "^1.0.3"
+    "next": "^2.1.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   }
 }
