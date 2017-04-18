@@ -3,36 +3,59 @@ import React from 'react'
 class Experiment extends React.Component {
   constructor(props) {
     super(props)
-    this.variants = React.Children.toArray(this.props.children)
-    this.state = {}
+    this.state = {
+      loading: true,
+      variant: null
+    }
+
+    this.store = this.props.children.reduce((acc, child) => {
+        const key = child.props.variant
+        acc[key] = child
+        return acc
+      },{})
   }
 
-  componentDidMount() {
-    const variant = this.variants[Math.floor(Math.random() * this.variants.length)]
+  experimentKey () {
+    return `experiment_${this.props.id}`
+  }
+
+  getVariant () {
+    let variantNumber = localStorage.getItem(this.experimentKey())
+    if (variantNumber == null) {
+      variantNumber = this.chooseRandomVariant()
+      localStorage.setItem(this.experimentKey(), variantNumber)
+    }
+    return this.store[variantNumber]
+  }
+
+  chooseRandomVariant () {
+    const variantNumber = Math.floor(Math.random() * (this.props.children.length-1))
+    return variantNumber
+  }
+
+  componentDidMount () {
+    const variant = this.getVariant()
 
     this.setState({
+      loading: false,
       variant: variant
     })
   }
 
   render () {
-    if (!('variant' in this.state)) {
-      return null
-    }
+    const variant = this.state.variant
 
-    return(
-      <Variant variant={this.state.variant} />
+    return (
+      <div>
+        {variant && variant}
+      </div>
     )
   }
 }
 
 class Variant extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render () {
-    return <div>{this.props.variant}</div>
+    return this.props.children
   }
 }
 
