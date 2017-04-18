@@ -29,7 +29,7 @@ class Experiment extends React.Component {
   }
 
   chooseRandomVariant () {
-    return Math.floor(Math.random() * (this.props.children.length-1))
+    return Math.floor(Math.random() * (this.props.children.length))
   }
 
   sendGaEvent(variant) {
