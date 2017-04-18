@@ -9,8 +9,7 @@ class Experiment extends React.Component {
     }
 
     this.store = this.props.children.reduce((acc, child) => {
-        const key = child.props.variant
-        acc[key] = child
+        acc[child.props.variant] = child
         return acc
       },{})
   }
@@ -29,8 +28,7 @@ class Experiment extends React.Component {
   }
 
   chooseRandomVariant () {
-    const variantNumber = Math.floor(Math.random() * (this.props.children.length-1))
-    return variantNumber
+    return Math.floor(Math.random() * (this.props.children.length-1))
   }
 
   componentDidMount () {
