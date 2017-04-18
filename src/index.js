@@ -10,7 +10,7 @@ class Experiment extends React.Component {
     }
 
     this.store = this.props.children.reduce((store, child) => {
-        store[child.props.variant] = child
+        store[child.props.name] = child
         return store
       },{})
   }
@@ -20,22 +20,22 @@ class Experiment extends React.Component {
   }
 
   getVariant () {
-    let variantNumber = localStorage.getItem(this.experimentKey())
-    if (variantNumber == null) {
-      variantNumber = this.chooseRandomVariant()
-      localStorage.setItem(this.experimentKey(), variantNumber)
+    let variantName = localStorage.getItem(this.experimentKey())
+    if (variantName == null) {
+      variantName = this.chooseRandomVariantName()
+      localStorage.setItem(this.experimentKey(), variantName)
     }
-    return this.store[variantNumber]
+    return this.store[variantName]
   }
 
-  chooseRandomVariant () {
+  chooseRandomVariantName () {
     return Math.floor(Math.random() * (this.props.children.length))
   }
 
   sendGaEvent(variant) {
     ga((tracker) => {
       tracker.set('expId', this.props.id)
-      tracker.set('expVar', variant.props.variant)
+      tracker.set('expVar', variant.props.name)
       tracker.send('pageview')
     })
   }

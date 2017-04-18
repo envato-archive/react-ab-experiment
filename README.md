@@ -17,19 +17,17 @@ import {Experiment, Variant} from 'react-ab-experiment'
 class myApp extends React.Component {
   render () {
     return(
-      <div>
-        <Experiment id="abc123">
-          <Variant variant="0">
-            <div>Variant 0</div>
-          </Variant>
-          <Variant variant="1">
-            <div>Variant 1</div>
-          </Variant>
-          <Variant variant="2">
-            <div>Variant 2</div>
-          </Variant>
-        </Experiment>
-      </div>
+      <Experiment id="abc123">
+        <Variant name="0">
+          <div>Variant 0</div>
+        </Variant>
+        <Variant name="1">
+          <div>Variant 1</div>
+        </Variant>
+        <Variant name="2">
+          <div>Variant 2</div>
+        </Variant>
+      </Experiment>
     )
   }
 }

@@ -6,13 +6,13 @@ class ReactABExperimentDemo extends React.Component {
     return(
       <div>
         <Experiment id="abc123">
-          <Variant variant="0">
+          <Variant name="0">
             <div>Variant 0</div>
           </Variant>
-          <Variant variant="1">
+          <Variant name="1">
             <div>Variant 1</div>
           </Variant>
-          <Variant variant="2">
+          <Variant name="2">
             <div>Variant 2</div>
           </Variant>
         </Experiment>
