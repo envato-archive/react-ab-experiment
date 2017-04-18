@@ -1,6 +1,6 @@
 import React from 'react'
 
-class ReactABExperiment extends React.Component {
+class Experiment extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -9,8 +9,18 @@ class ReactABExperiment extends React.Component {
   }
 
   render () {
-    <div>Hi</div>
+    return <div>Hi</div>
   }
 }
 
-export default ReactABExperiment
+class Variant extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render () {
+    return <div>Hi</div>
+  }
+}
+
+export {Experiment, Variant}
