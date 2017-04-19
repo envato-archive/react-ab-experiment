@@ -22,17 +22,20 @@ class Experiment extends React.Component {
     return `experiment_${this.experimentId}`
   }
 
-  getVariantName () {
-    let variantName = this.props.cacheGet(this.experimentKey())
-    if (variantName == null) {
-      return (this.fetchVariantName() || this.chooseRandomVariantName()).then((variantName) => {
-        this.props.onEnrolment(this.experimentId, variantName)
-        this.props.cacheSet(this.experimentKey(), variantName)
-        return variantName
-      })
+  cacheGet (experimentKey) {
+    if (typeof this.props.cacheGet == "undefined"){
+      return null
     } else {
-      return Promise.resolve(variantName)
+      return this.props.cacheGet(experimentKey)
     }
+  }
+
+  cacheSet (experimentKey, variantName) {
+    return this.props.cacheSet && this.props.cacheSet(experimentKey, variantName)
+  }
+
+  fetchVariantName() {
+    return this.props.fetchVariantName && this.props.fetchVariantName(this.experimentId)
   }
 
   chooseRandomVariantName () {
@@ -41,8 +44,17 @@ class Experiment extends React.Component {
     return Promise.resolve(choosenVariantComponent.props.name)
   }
 
-  fetchVariantName() {
-    return this.props.fetchVariantName && this.props.fetchVariantName(this.experimentId)
+  getVariantName () {
+    let variantName = this.cacheGet(this.experimentKey())
+    if (variantName == null) {
+      return (this.fetchVariantName() || this.chooseRandomVariantName()).then((variantName) => {
+        this.props.onEnrolment(this.experimentId, variantName)
+        this.cacheSet(this.experimentKey(), variantName)
+        return variantName
+      })
+    } else {
+      return Promise.resolve(variantName)
+    }
   }
 
   componentDidMount () {
