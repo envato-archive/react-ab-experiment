@@ -51,6 +51,9 @@ class Experiment extends React.Component {
         this.props.onEnrolment(this.experimentId, variantName)
         this.cacheSet(this.experimentKey(), variantName)
         return variantName
+      }).catch((err) => {
+        const originalVariant = this.variantComponents[0]
+        return originalVariant.props.name
       })
     } else {
       return Promise.resolve(variantName)
