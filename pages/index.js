@@ -15,9 +15,17 @@ class ReactABExperimentDemo extends React.Component {
       .then(response => response.variant)
   }
 
+  cacheGet(experimentKey) {
+    return localStorage.getItem(experimentKey)
+  }
+
+  cacheSet (experimentKey, variantName) {
+      return localStorage.setItem(experimentKey, variantName)
+  }
+
   render () {
     return(
-      <Experiment id="7FHd06ZdQ7iF_uU5QvfXTg" onEnrolment={this.onEnrolment} fetchVariantName={this.fetchVariantName} >
+      <Experiment id="7FHd06ZdQ7iF_uU5QvfXTg" onEnrolment={this.onEnrolment} fetchVariantName={this.fetchVariantName} cacheGet={this.cacheGet} cacheSet={this.cacheSet} >
         <Loading>
           <div> LOADING..... </div>
         </Loading>

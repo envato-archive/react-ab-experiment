@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class Experiment extends React.Component {
   constructor(props) {
@@ -22,11 +23,11 @@ class Experiment extends React.Component {
   }
 
   getVariantName () {
-    let variantName = localStorage.getItem(this.experimentKey())
+    let variantName = this.props.cacheGet(this.experimentKey())
     if (variantName == null) {
       return (this.fetchVariantName() || this.chooseRandomVariantName()).then((variantName) => {
         this.props.onEnrolment(this.experimentId, variantName)
-        localStorage.setItem(this.experimentKey(), variantName)
+        this.props.cacheSet(this.experimentKey(), variantName)
         return variantName
       })
     } else {
@@ -61,6 +62,14 @@ class Experiment extends React.Component {
 
     return this.state.variant
   }
+}
+
+Experiment.propTypes = {
+  id:               PropTypes.string.isRequired,
+  onEnrolment:      PropTypes.func.isRequired,
+  fetchVariantName: PropTypes.func,
+  cacheGet:         PropTypes.func,
+  cacheSet:         PropTypes.func
 }
 
 const Variant = (props) => {
