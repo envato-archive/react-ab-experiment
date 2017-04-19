@@ -50,3 +50,13 @@ class myApp extends React.Component {
   }
 }
 ```
+
+## Development
+
+There is an example `next.js` app in the `pages` folder.
+To bring it up in develpoment:
+
+```sh
+$ yarn
+$ yarn run dev
+```
