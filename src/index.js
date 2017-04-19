@@ -16,6 +16,9 @@ class Experiment extends React.Component {
     this.loadingComponent = this.props.children.find((child) => {
       return child.type.displayName == "Loading"
     })
+
+    console.log(this.variantComponents)
+    console.log(this.loadingComponent)
   }
 
   experimentKey () {
@@ -39,8 +42,6 @@ class Experiment extends React.Component {
   }
 
   chooseRandomVariantName () {
-    console.log(this.variantComponents)
-    console.log(this.loadingComponent)
     const randomIndex = Math.floor(Math.random() * (this.variantComponents.length))
     const choosenVariantComponent = this.variantComponents[randomIndex]
     return Promise.resolve(choosenVariantComponent.props.name)
