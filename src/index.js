@@ -8,10 +8,12 @@ class Experiment extends React.Component {
       variant: null
     }
 
-    this.store = this.props.children.reduce((store, child) => {
-        store[child.props.name] = child
-        return store
-      },{})
+    this.variantComponents = this.props.children.filter((child) => {
+      return child.type.displayName == "Variant"
+    })
+    this.loadingComponent = this.props.children.find((child) => {
+      return child.type.displayName == "Loading"
+    })
   }
 
   experimentKey () {
@@ -26,7 +28,7 @@ class Experiment extends React.Component {
       this.props.onEnrolment(experimentId, variantName)
       localStorage.setItem(this.experimentKey(), variantName)
     }
-    return this.store[variantName]
+    return this.variantComponents.find((variant) => { return variant.props.name == variantName })
   }
 
   chooseRandomVariantName () {
@@ -34,18 +36,18 @@ class Experiment extends React.Component {
   }
 
   componentDidMount () {
-    const variant = this.getVariant()
-
     this.setState({
       loading: false,
-      variant: variant
+      variant: this.getVariant()
     })
   }
 
   render () {
-    const variant = this.state.variant
+    if (this.state.loading && this.loadingComponent !== undefined) {
+      return this.loadingComponent
+    }
 
-    return variant
+    return this.state.variant
   }
 }
 
@@ -55,4 +57,10 @@ class Variant extends React.Component {
   }
 }
 
-export {Experiment, Variant}
+class Loading extends React.Component {
+  render () {
+    return this.props.children
+  }
+}
+
+export {Experiment, Variant, Loading}

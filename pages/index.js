@@ -1,5 +1,5 @@
 import React from 'react'
-import {Experiment, Variant} from '../src'
+import {Experiment, Variant, Loading} from '../src'
 
 class ReactABExperimentDemo extends React.Component {
   onEnrolment (experimentId, variantName) {
@@ -10,6 +10,9 @@ class ReactABExperimentDemo extends React.Component {
   render () {
     return(
       <Experiment id="abc123" onEnrolment={this.onEnrolment}>
+        <Loading>
+          <div> LOADING..... </div>
+        </Loading>
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>

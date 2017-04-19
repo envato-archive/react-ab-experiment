@@ -12,10 +12,10 @@ $ npm install react-ab-experiment
 
 ```js
 import React from 'react'
-import {Experiment, Variant} from 'react-ab-experiment'
+import {Experiment, Variant, Loading} from 'react-ab-experiment'
 
 class myApp extends React.Component {
-  onEnrolment (experimentId, variantName) {
+  handleEnrolment (experimentId, variantName) {
     // send enrollment data to AB test reporting tool, eg: Google Analytics
     ga('set', 'expId', experimentId)
     ga('set', 'expVar', variantName)
@@ -24,7 +24,10 @@ class myApp extends React.Component {
 
   render () {
     return(
-      <Experiment id="abc123" onEnrolment={this.onEnrolment}>
+      <Experiment id="abc123" onEnrolment={this.handleEnrolment}>
+        <Loading>
+          <div>Loading...</div>
+        </Loading>
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>
