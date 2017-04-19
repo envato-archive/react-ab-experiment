@@ -32,7 +32,9 @@ class Experiment extends React.Component {
   }
 
   chooseRandomVariantName () {
-    return Math.floor(Math.random() * (this.props.children.length))
+    const randomIndex = Math.floor(Math.random() * (this.variantComponents.length))
+    const choosenVariantComponent = this.variantComponents[randomIndex]
+    return choosenVariantComponent.props.name
   }
 
   componentDidMount () {
