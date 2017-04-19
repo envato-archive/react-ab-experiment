@@ -45,10 +45,6 @@ class Experiment extends React.Component {
   render () {
     const variant = this.state.variant
 
-    if (variant == null) {
-      return null
-    }
-
     return variant
   }
 }
