@@ -4,6 +4,11 @@ import PropTypes from 'prop-types'
 class Experiment extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      loading: true,
+      variant: null
+    }
+
     this.experimentId = this.props.id
     this.variantComponents = this.props.children.filter((child) => {
       return child.type.displayName == "Variant"
@@ -11,11 +16,6 @@ class Experiment extends React.Component {
     this.loadingComponent = this.props.children.find((child) => {
       return child.type.displayName == "Loading"
     })
-
-    this.state = {
-      loading: true,
-      variant: null
-    }
   }
 
   experimentKey () {
@@ -39,6 +39,8 @@ class Experiment extends React.Component {
   }
 
   chooseRandomVariantName () {
+    console.log(this.variantComponents)
+    console.log(this.loadingComponent)
     const randomIndex = Math.floor(Math.random() * (this.variantComponents.length))
     const choosenVariantComponent = this.variantComponents[randomIndex]
     return Promise.resolve(choosenVariantComponent.props.name)
