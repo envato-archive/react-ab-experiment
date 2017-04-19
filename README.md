@@ -15,9 +15,16 @@ import React from 'react'
 import {Experiment, Variant} from 'react-ab-experiment'
 
 class myApp extends React.Component {
+  onEnrolment (experimentId, variantName) {
+    // send enrollment data to AB test reporting tool, eg: Google Analytics
+    ga('set', 'expId', experimentId)
+    ga('set', 'expVar', variantName)
+    ga('send', 'pageview')
+  }
+
   render () {
     return(
-      <Experiment id="abc123">
+      <Experiment id="abc123" onEnrolment={this.onEnrolment}>
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>

@@ -23,6 +23,8 @@ class Experiment extends React.Component {
     let variantName = localStorage.getItem(this.experimentKey())
     if (variantName == null) {
       variantName = this.chooseRandomVariantName()
+      const experimentId = this.props.id
+      this.props.onEnrolment(experimentId, variantName)
       localStorage.setItem(this.experimentKey(), variantName)
     }
     return this.store[variantName]
@@ -32,18 +34,9 @@ class Experiment extends React.Component {
     return Math.floor(Math.random() * (this.props.children.length))
   }
 
-  sendGaEvent(variant) {
-    ga((tracker) => {
-      tracker.set('expId', this.props.id)
-      tracker.set('expVar', variant.props.name)
-      tracker.send('pageview')
-    })
-  }
-
   componentDidMount () {
     const variant = this.getVariant()
 
-    this.sendGaEvent(variant)
     this.setState({
       loading: false,
       variant: variant
