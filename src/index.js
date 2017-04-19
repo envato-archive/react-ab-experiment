@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 class Experiment extends React.Component {
   constructor(props) {
@@ -77,11 +76,11 @@ class Experiment extends React.Component {
 }
 
 Experiment.propTypes = {
-  id:               PropTypes.string.isRequired,
-  onEnrolment:      PropTypes.func.isRequired,
-  fetchVariantName: PropTypes.func,
-  cacheGet:         PropTypes.func,
-  cacheSet:         PropTypes.func
+  id:               React.PropTypes.string.isRequired,
+  onEnrolment:      React.PropTypes.func.isRequired,
+  fetchVariantName: React.PropTypes.func,
+  cacheGet:         React.PropTypes.func,
+  cacheSet:         React.PropTypes.func
 }
 
 const Variant = (props) => {
