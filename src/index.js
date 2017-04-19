@@ -17,6 +17,7 @@ class Experiment extends React.Component {
       return child.type.displayName == "Loading"
     })
 
+    console.log(this.props.children)
     console.log(this.variantComponents)
     console.log(this.loadingComponent)
   }
