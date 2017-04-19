@@ -1,4 +1,4 @@
-A/B Experiment React Component
+# A/B Experiment React Component
 
 A/B Experiment for React.js
 
@@ -13,6 +13,7 @@ $ npm install react-ab-experiment
 ```js
 import React from 'react'
 import {Experiment, Variant, Loading} from 'react-ab-experiment'
+import 'whatwg-fetch'
 
 class myApp extends React.Component {
   handleEnrolment (experimentId, variantName) {
@@ -22,9 +23,16 @@ class myApp extends React.Component {
     ga('send', 'pageview')
   }
 
+  fetchVariantName(experimentId) {
+    return fetch(`https://my-ab-testing-server.com/experiments/${experimentId}/variant`, {
+      credentials: 'include' })
+      .then(response => response.json())
+      .then(response => response.variant)
+  }
+
   render () {
     return(
-      <Experiment id="abc123" onEnrolment={this.handleEnrolment}>
+      <Experiment id="abc123" onEnrolment={this.handleEnrolment} fetchVariantName={this.fetchVariantName}>
         <Loading>
           <div>Loading...</div>
         </Loading>
