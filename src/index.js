@@ -45,7 +45,7 @@ class Experiment extends React.Component {
   }
 
   render () {
-    if (this.state.loading && this.loadingComponent !== undefined) {
+    if (this.state.loading && typeof this.loadingComponent !== "undefined") {
       return this.loadingComponent
     }
 
@@ -53,16 +53,12 @@ class Experiment extends React.Component {
   }
 }
 
-class Variant extends React.Component {
-  render () {
-    return this.props.children
-  }
+const Variant = (props) => {
+  return props.children
 }
 
-class Loading extends React.Component {
-  render () {
-    return this.props.children
-  }
+const Loading = (props) => {
+  return props.children
 }
 
 export {Experiment, Variant, Loading}
