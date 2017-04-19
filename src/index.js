@@ -1,5 +1,4 @@
 import React from 'react'
-import ga from './ga'
 
 class Experiment extends React.Component {
   constructor(props) {
