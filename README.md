@@ -19,7 +19,7 @@ The variant is not cached, so on a new page render and new variant will be chose
 For example:
 ```js
 import React from 'react'
-import {Experiment, Variant, Loading} from 'react-ab-experiment'
+import {Experiment, Variant} from 'react-ab-experiment'
 
 class myApp extends React.Component {
   handleEnrolment (experimentId, variantName) {
@@ -32,9 +32,6 @@ class myApp extends React.Component {
   render () {
     return(
       <Experiment id="abc123" onEnrolment={this.handleEnrolment} >
-        <Loading>
-          <div>Loading...</div>
-        </Loading>
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>
@@ -57,7 +54,7 @@ On the first load, the user will be enrolled in a variant and the variant name w
 Using localStorage for example:
 ```js
 import React from 'react'
-import {Experiment, Variant, Loading} from 'react-ab-experiment'
+import {Experiment, Variant} from 'react-ab-experiment'
 
 class myApp extends React.Component {
   handleEnrolment (experimentId, variantName) {
@@ -75,9 +72,6 @@ class myApp extends React.Component {
   render () {
     return(
       <Experiment id="abc123" onEnrolment={this.handleEnrolment} cacheGet={this.cacheGet} cacheSet={this.cacheSet} >
-        <Loading>
-          <div>Loading...</div>
-        </Loading>
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>
@@ -100,7 +94,7 @@ For example:
 
 ```js
 import React from 'react'
-import {Experiment, Variant, Loading} from 'react-ab-experiment'
+import {Experiment, Variant} from 'react-ab-experiment'
 import 'whatwg-fetch'
 
 class myApp extends React.Component {
@@ -118,9 +112,6 @@ class myApp extends React.Component {
   render () {
     return(
       <Experiment id="abc123" onEnrolment={this.handleEnrolment} fetchVariantName={this.fetchVariantName} >
-        <Loading>
-          <div>Loading...</div>
-        </Loading>
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>
@@ -163,9 +154,6 @@ Required component which defines the different variants of the ab experiment.
 
 #### name
 Required string which defines the name of the variant.
-
-### Loading
-Optional component which defines what to display before a variant is chosen and rendered on the screen. You could use a loading spinner or blank component.
 
 ## Examples
 

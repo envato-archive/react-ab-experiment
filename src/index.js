@@ -10,12 +10,7 @@ class Experiment extends React.Component {
     }
 
     this.experimentId = this.props.id
-    this.variantComponents = this.props.children.filter((child) => {
-      return (child.type.displayName || child.type.name) == "Variant"
-    })
-    this.loadingComponent = this.props.children.find((child) => {
-      return (child.type.displayName || child.type.name) == "Loading"
-    })
+    this.variantComponents = this.props.children
   }
 
   experimentKey () {
@@ -71,10 +66,6 @@ class Experiment extends React.Component {
   }
 
   render () {
-    if (this.state.loading && typeof this.loadingComponent !== "undefined") {
-      return this.loadingComponent
-    }
-
     return this.state.variant
   }
 }
@@ -91,8 +82,4 @@ const Variant = (props) => {
   return props.children
 }
 
-const Loading = (props) => {
-  return props.children
-}
-
-export {Experiment, Variant, Loading}
+export {Experiment, Variant}
