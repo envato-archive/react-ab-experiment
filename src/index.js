@@ -11,10 +11,10 @@ class Experiment extends React.Component {
 
     this.experimentId = this.props.id
     this.variantComponents = this.props.children.filter((child) => {
-      return child.type.name == "Variant"
+      return (child.type.displayName || child.type.name) == "Variant"
     })
     this.loadingComponent = this.props.children.find((child) => {
-      return child.type.name == "Loading"
+      return (child.type.displayName || child.type.name) == "Loading"
     })
   }
 
