@@ -130,7 +130,7 @@ class myApp extends React.Component {
 
 ## API
 
-##### Experiment
+#### Experiment
 Required component which defines the ab experiment.
 
 **id**
@@ -157,7 +157,7 @@ localStorageCache = {
 **fetchVariantName(experimentId)**
 Optional callback function which fetches the variant the user is enrolled into for the experiment, from a remote server. It requires the return value to be a `Promise`.
 
-###### Variant
+##### Variant
 Required component which defines the different variants of the ab experiment.
 
 **name**
