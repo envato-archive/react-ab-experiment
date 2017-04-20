@@ -48,7 +48,7 @@ class myApp extends React.Component {
 ```
 
 ### Include caching
-If we want to cache the chosen variant for a user, we can set the `cacheGet` and `cacheSet` props.
+If we want to cache the chosen variant for a user, we can set the `cache` props with a javascript object which has a `get` and `set` functions.
 On the first load, the user will be enrolled in a variant and the variant name will be cached. On subsuqent requests, we will get that variant name out of the cache.
 
 Using localStorage for example:
@@ -56,22 +56,23 @@ Using localStorage for example:
 import React from 'react'
 import {Experiment, Variant} from 'react-ab-experiment'
 
+const LocalStorageCache  = {
+  get:  (key) => {
+    return window.localStorage.getItem(key)
+  },
+  set: (key, value) => {
+    return window.localStorage.setItem(key, value)
+  }
+}
+
 class myApp extends React.Component {
   handleEnrolment (experimentId, variantName) {
     ...
   }
 
-  cacheGet (experimentKey) {
-    return localStorage.getItem(experimentKey)
-  }
-
-  cacheSet (experimentKey, variantNumber) {
-    return localStorage.setItem(experimentKey, variantNumber)
-  }
-
   render () {
     return(
-      <Experiment id="abc123" onEnrolment={this.handleEnrolment} cacheGet={this.cacheGet} cacheSet={this.cacheSet} >
+      <Experiment id="abc123" onEnrolment={this.handleEnrolment} cache={LocalStorageCache}
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>

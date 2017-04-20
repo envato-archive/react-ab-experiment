@@ -10,23 +10,23 @@ class Experiment extends React.Component {
     }
 
     this.experimentId = this.props.id
+    this.experimentKey = `experiment_${this.experimentId}`
     this.variantComponents = this.props.children
   }
 
-  experimentKey () {
-    return `experiment_${this.experimentId}`
-  }
-
-  cacheGet (experimentKey) {
-    if (typeof this.props.cacheGet == "undefined"){
-      return null
-    } else {
-      return this.props.cacheGet(experimentKey)
+  nullCache () {
+    return {
+      get: () => null,
+      set: () => null
     }
   }
 
-  cacheSet (experimentKey, variantName) {
-    return this.props.cacheSet && this.props.cacheSet(experimentKey, variantName)
+  cache () {
+    if (typeof this.props.cache == 'undefined') {
+      return this.nullCache()
+    } else {
+      return this.props.cache
+    }
   }
 
   fetchVariantName() {
@@ -40,11 +40,11 @@ class Experiment extends React.Component {
   }
 
   getVariantName () {
-    let variantName = this.cacheGet(this.experimentKey())
+    let variantName = this.cache().get(this.experimentKey)
     if (variantName == null) {
       return (this.fetchVariantName() || this.chooseRandomVariantName()).then((variantName) => {
         this.props.onEnrolment(this.experimentId, variantName)
-        this.cacheSet(this.experimentKey(), variantName)
+        this.cache().set(this.experimentKey, variantName)
         return variantName
       }).catch((err) => {
         const originalVariant = this.variantComponents[0]
