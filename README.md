@@ -133,35 +133,40 @@ class myApp extends React.Component {
 ### Experiment
 Required component which defines the ab experiment.
 
-  **id**
-  Required string which defines the id of the experiment.
+**id**
 
-  **onEnrolment(experimentId, variantName)**
-  Required callback function which is used to log the variant a user has been enrolled into for the experiment.
+Required string which defines the id of the experiment.
 
-  **cache**
-  Optional object with a `get` and `set` function. This is how you define if variants should be cached in `localStorage`, `cookies`, in memory etc.
+**onEnrolment(experimentId, variantName)**
 
-  eg:
-  ```js
-  localStorageCache = {
-    get: (key) => {
-      return window.localStorage.getItem(key)
-    },
-    set: (key, value) => {
-      return window.localStorage.setItem(key, value)
-    }
+Required callback function which is used to log the variant a user has been enrolled into for the experiment.
+
+**cache**
+
+Optional object with a `get` and `set` function. This is how you define if variants should be cached in `localStorage`, `cookies`, in memory etc.
+
+eg:
+```js
+localStorageCache = {
+  get: (key) => {
+    return window.localStorage.getItem(key)
+  },
+  set: (key, value) => {
+    return window.localStorage.setItem(key, value)
   }
-  ```
+}
+```
 
-  **fetchVariantName(experimentId)**
-  Optional callback function which fetches the variant the user is enrolled into for the experiment, from a remote server. It requires the return value to be a `Promise`.
+**fetchVariantName(experimentId)**
+
+Optional callback function which fetches the variant the user is enrolled into for the experiment, from a remote server. It requires the return value to be a `Promise`.
 
 #### Variant
 Required component which defines the different variants of the ab experiment.
 
-  **name**
-  Required string which defines the name of the variant.
+**name**
+
+Required string which defines the name of the variant.
 
 ## Examples
 
