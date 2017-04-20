@@ -72,7 +72,7 @@ class myApp extends React.Component {
 
   render () {
     return(
-      <Experiment id="abc123" onEnrolment={this.handleEnrolment} cache={LocalStorageCache}
+      <Experiment id="abc123" onEnrolment={this.handleEnrolment} cache={LocalStorageCache} >
         <Variant name="0">
           <div>Variant 0</div>
         </Variant>
