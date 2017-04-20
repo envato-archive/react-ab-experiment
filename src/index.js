@@ -74,8 +74,10 @@ Experiment.propTypes = {
   id:               PropTypes.string.isRequired,
   onEnrolment:      PropTypes.func.isRequired,
   fetchVariantName: PropTypes.func,
-  cacheGet:         PropTypes.func,
-  cacheSet:         PropTypes.func
+  cache:            PropTypes.shape({
+                      get: PropTypes.func,
+                      set: PropTypes.func
+                    })
 }
 
 const Variant = (props) => {

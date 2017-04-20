@@ -130,30 +130,37 @@ class myApp extends React.Component {
 
 ## API
 
-### Experiment
+##### Experiment
 Required component which defines the ab experiment.
 
-#### id
+**id**
 Required string which defines the id of the experiment.
 
-#### onEnrolment(experimentId, variantName)
+**onEnrolment(experimentId, variantName)**
 Required callback function which is used to log the variant a user has been enrolled into for the experiment.
 
-#### cacheGet(experimentKey)
-Optional callback function which gets the current user's variant name for the experiment from the cache.
-You could use any browser storages `cookies`, `localStorage` etc
+**cache**
+Optional object with a `get` and `set` function. This is how you define if variants should be cached in `localStorage`, `cookies`, in memory etc.
 
-#### cacheSet(experimentKey, variantName)
-Optional callback function which sets the current user's variant name for the experiment to the cache.
-You could use any browser storages `cookies`, `localStorage` etc
+eg:
+```js
+localStorageCache = {
+  get: (key) => {
+    return window.localStorage.getItem(key)
+  },
+  set: (key, value) => {
+    return window.localStorage.setItem(key, value)
+  }
+}
+```
 
-#### fetchVariantName(experimentId)
+**fetchVariantName(experimentId)**
 Optional callback function which fetches the variant the user is enrolled into for the experiment, from a remote server. It requires the return value to be a `Promise`.
 
-### Variant
+###### Variant
 Required component which defines the different variants of the ab experiment.
 
-#### name
+**name**
 Required string which defines the name of the variant.
 
 ## Examples
