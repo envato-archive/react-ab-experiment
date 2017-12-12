@@ -6,12 +6,11 @@ class Experiment extends React.Component {
     super(props)
     this.state = {
       loading: true,
-      variant: null
+      variantName: null
     }
 
     this.experimentId = this.props.id
     this.experimentKey = `experiment_${this.experimentId}`
-    this.variantComponents = this.props.children
   }
 
   nullCache () {
@@ -34,8 +33,8 @@ class Experiment extends React.Component {
   }
 
   chooseRandomVariantName () {
-    const randomIndex = Math.floor(Math.random() * (this.variantComponents.length))
-    const choosenVariantComponent = this.variantComponents[randomIndex]
+    const randomIndex = Math.floor(Math.random() * (this.props.children.length))
+    const choosenVariantComponent = this.props.children[randomIndex]
     return Promise.resolve(choosenVariantComponent.props.name)
   }
 
@@ -47,7 +46,7 @@ class Experiment extends React.Component {
         this.cache().set(this.experimentKey, variantName)
         return variantName
       }).catch((err) => {
-        const originalVariant = this.variantComponents[0]
+        const originalVariant = this.props.children[0]
         return originalVariant.props.name
       })
     } else {
@@ -57,16 +56,16 @@ class Experiment extends React.Component {
 
   componentDidMount () {
     this.getVariantName().then((variantName) => {
-      const variant = this.variantComponents.find(variant => variant.props.name == variantName)
-      this.setState({
-        loading: false,
-        variant: variant
-      })
+      this.setState({ loading: false, variantName: variantName })
     })
   }
 
+  findVariantByName(name) {
+    return this.props.children.find(v => v.props.name == name) || null
+  }
+
   render () {
-    return this.state.variant
+    return this.findVariantByName(this.state.variantName)
   }
 }
 
