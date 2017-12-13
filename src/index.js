@@ -6,12 +6,8 @@ class Experiment extends React.Component {
     super(props)
     this.state = {
       loading: true,
-      variant: null
+      variantName: null
     }
-
-    this.experimentId = this.props.id
-    this.experimentKey = `experiment_${this.experimentId}`
-    this.variantComponents = this.props.children
   }
 
   nullCache () {
@@ -30,24 +26,26 @@ class Experiment extends React.Component {
   }
 
   fetchVariantName() {
-    return this.props.fetchVariantName && this.props.fetchVariantName(this.experimentId)
+    return this.props.fetchVariantName && this.props.fetchVariantName(this.props.experimentId)
   }
 
   chooseRandomVariantName () {
-    const randomIndex = Math.floor(Math.random() * (this.variantComponents.length))
-    const choosenVariantComponent = this.variantComponents[randomIndex]
+    const randomIndex = Math.floor(Math.random() * (this.props.children.length))
+    const choosenVariantComponent = this.props.children[randomIndex]
     return Promise.resolve(choosenVariantComponent.props.name)
   }
 
   getVariantName () {
-    let variantName = this.cache().get(this.experimentKey)
-    if (variantName == null) {
+    const experimentKey = `experiment_${this.props.experimentId}`
+    const variantName = this.cache().get(experimentKey)
+
+    if (!variantName) {
       return (this.fetchVariantName() || this.chooseRandomVariantName()).then((variantName) => {
-        this.props.onEnrolment(this.experimentId, variantName)
-        this.cache().set(this.experimentKey, variantName)
+        this.props.onEnrolment(this.props.experimentId, variantName)
+        this.cache().set(experimentKey, variantName)
         return variantName
       }).catch((err) => {
-        const originalVariant = this.variantComponents[0]
+        const originalVariant = this.props.children[0]
         return originalVariant.props.name
       })
     } else {
@@ -57,21 +55,21 @@ class Experiment extends React.Component {
 
   componentDidMount () {
     this.getVariantName().then((variantName) => {
-      const variant = this.variantComponents.find(variant => variant.props.name == variantName)
-      this.setState({
-        loading: false,
-        variant: variant
-      })
+      this.setState({ loading: false, variantName: variantName })
     })
   }
 
+  findVariantByName(name) {
+    return this.props.children.find(v => v.props.name == name) || null
+  }
+
   render () {
-    return this.state.variant
+    return this.findVariantByName(this.state.variantName)
   }
 }
 
 Experiment.propTypes = {
-  id:               PropTypes.string.isRequired,
+  experimentId:     PropTypes.string.isRequired,
   onEnrolment:      PropTypes.func.isRequired,
   fetchVariantName: PropTypes.func,
   cache:            PropTypes.shape({
