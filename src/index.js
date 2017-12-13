@@ -8,9 +8,6 @@ class Experiment extends React.Component {
       loading: true,
       variantName: null
     }
-
-    this.experimentId = this.props.id
-    this.experimentKey = `experiment_${this.experimentId}`
   }
 
   nullCache () {
@@ -29,7 +26,7 @@ class Experiment extends React.Component {
   }
 
   fetchVariantName() {
-    return this.props.fetchVariantName && this.props.fetchVariantName(this.experimentId)
+    return this.props.fetchVariantName && this.props.fetchVariantName(this.props.experimentId)
   }
 
   chooseRandomVariantName () {
@@ -39,11 +36,13 @@ class Experiment extends React.Component {
   }
 
   getVariantName () {
-    let variantName = this.cache().get(this.experimentKey)
+    const experimentKey = `experiment_${this.props.experimentId}`
+    const variantName = this.cache().get(experimentKey)
+
     if (variantName == null) {
       return (this.fetchVariantName() || this.chooseRandomVariantName()).then((variantName) => {
-        this.props.onEnrolment(this.experimentId, variantName)
-        this.cache().set(this.experimentKey, variantName)
+        this.props.onEnrolment(this.props.experimentId, variantName)
+        this.cache().set(experimentKey, variantName)
         return variantName
       }).catch((err) => {
         const originalVariant = this.props.children[0]
@@ -70,7 +69,7 @@ class Experiment extends React.Component {
 }
 
 Experiment.propTypes = {
-  id:               PropTypes.string.isRequired,
+  experimentId:     PropTypes.string.isRequired,
   onEnrolment:      PropTypes.func.isRequired,
   fetchVariantName: PropTypes.func,
   cache:            PropTypes.shape({
