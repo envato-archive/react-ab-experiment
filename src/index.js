@@ -39,7 +39,7 @@ class Experiment extends React.Component {
     const experimentKey = `experiment_${this.props.experimentId}`
     const variantName = this.cache().get(experimentKey)
 
-    if (variantName == null) {
+    if (!variantName) {
       return (this.fetchVariantName() || this.chooseRandomVariantName()).then((variantName) => {
         this.props.onEnrolment(this.props.experimentId, variantName)
         this.cache().set(experimentKey, variantName)
